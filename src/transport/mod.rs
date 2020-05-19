@@ -1,6 +1,7 @@
 use async_trait::async_trait;
 
 use crate::message::Message;
+pub(crate) mod amqp_transport;
 pub(crate) mod mqtt_transport;
 
 pub(crate) enum MessageHandler {
