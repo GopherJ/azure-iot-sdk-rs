@@ -62,4 +62,4 @@ pub const SDK_VERSION: &str = std::env!("CARGO_PKG_VERSION");
 pub mod client;
 /// Message types for communicating with the IoT Hub
 pub mod message;
-pub(crate) mod mqtt_transport;
+pub mod transport;

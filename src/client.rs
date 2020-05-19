@@ -3,7 +3,7 @@ use hmac::{Hmac, Mac};
 use sha2::Sha256;
 
 use crate::message::Message;
-use crate::mqtt_transport::{MessageHandler, MqttTransport, Transport};
+use crate::transport::{mqtt_transport::MqttTransport, MessageHandler, Transport};
 
 const DEVICEID_KEY: &str = "DeviceId";
 const HOSTNAME_KEY: &str = "HostName";
