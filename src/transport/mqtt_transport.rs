@@ -274,9 +274,8 @@ pub(crate) struct MqttTransport {
     pub(crate) d2c_sender: Sender<SendType>,
 }
 
-#[async_trait]
-impl Transport for MqttTransport {
-    async fn new(hub_name: String, device_id: String, sas: String) -> Self {
+impl MqttTransport {
+    pub async fn new(hub_name: String, device_id: String, sas: String) -> Self {
         let mut socket = tcp_connect(&hub_name).await;
 
         let mut conn = ConnectPacket::new("MQTT", &device_id);
@@ -348,7 +347,10 @@ impl Transport for MqttTransport {
             d2c_sender,
         }
     }
+}
 
+#[async_trait]
+impl Transport for MqttTransport {
     async fn send_message(&mut self, message: Message) {
         self.d2c_sender
             .send(SendType::Message(message))

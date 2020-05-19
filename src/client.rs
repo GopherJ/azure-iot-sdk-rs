@@ -3,7 +3,9 @@ use hmac::{Hmac, Mac};
 use sha2::Sha256;
 
 use crate::message::Message;
-use crate::transport::{mqtt_transport::MqttTransport, MessageHandler, Transport};
+use crate::transport::{
+    http_transport::HttpTransport, mqtt_transport::MqttTransport, MessageHandler,
+};
 
 const DEVICEID_KEY: &str = "DeviceId";
 const HOSTNAME_KEY: &str = "HostName";
@@ -13,7 +15,10 @@ const SHAREDACCESSKEY_KEY: &str = "SharedAccessKey";
 #[derive(Debug, Clone)]
 pub struct IoTHubClient {
     device_id: String,
+    #[cfg(not(feature = "mqtt-transport"))]
     transport: MqttTransport,
+    #[cfg(feature = "http-transport")]
+    transport: HttpTransport,
 }
 
 fn generate_sas(hub: &str, device_id: &str, key: &str, expiry_timestamp: i64) -> String {

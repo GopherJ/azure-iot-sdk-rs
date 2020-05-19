@@ -2,6 +2,7 @@ use async_trait::async_trait;
 
 use crate::message::Message;
 pub(crate) mod amqp_transport;
+pub(crate) mod http_transport;
 pub(crate) mod mqtt_transport;
 
 pub(crate) enum MessageHandler {
@@ -12,7 +13,6 @@ pub(crate) enum MessageHandler {
 
 #[async_trait]
 pub(crate) trait Transport {
-    async fn new(hub_name: String, device_id: String, sas: String) -> Self;
     async fn send_message(&mut self, message: Message);
     async fn send_property_update(&mut self, request_id: &str, body: &str);
     async fn set_message_handler(&mut self, device_id: &str, handler: MessageHandler);
